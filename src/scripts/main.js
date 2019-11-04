@@ -110,15 +110,28 @@ const salesByWeek = [
 
 
 const searchInput = document.querySelector("#searchInput")
+const resultsContainer = document.querySelector("#container")
 
-searchInput.addEventListner('keypress', event => {
-  if (event.charCode === 13) {
-    const searchTerm = event.target.value
 
-    salesByWeek.forEach(sale => {
-        if (sale.sales_agent.mobile === searchTerm) {
-            
-        }
-    });
-  }
-})
+searchInput.addEventListener('keypress', event => {
+    resultsContainer.innerHTML = ``
+    if (event.charCode === 13) {
+        const searchTerm = event.target.value
+        console.log(searchTerm)
+        salesByWeek.forEach(sale => {
+            for (const value of Object.values(sale.sales_agent)) {
+                console.log(value)
+                if (value.includes(searchTerm)) {
+                    resultsContainer.innerHTML += `
+                <h2>${sale.sales_agent.first_name} ${sale.sales_agent.last_name}</h2>
+             <section>
+                 ${sale.sales_agent.mobile}
+                ${sale.sales_agent.email}
+               </section>
+            `
+                }
+            }
+        })
+    }
+}
+);
